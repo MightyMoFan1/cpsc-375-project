@@ -1,6 +1,4 @@
-# Problem Statement
-
-## Modeling and Forecasting COVID-19 Dynamics in the United States Using Logistic Growth Models
+# Modeling and Forecasting COVID-19 Dynamics in the United States Using Logistic Growth Models
 
 The COVID-19 pandemic has had a profound impact on public health, healthcare infrastructure, and socioeconomic systems worldwide. Understanding the dynamics of infectious disease spread through mathematical and computational modeling is essential for analyzing epidemic trends, evaluating growth patterns, and developing data-driven forecasting approaches.
 
