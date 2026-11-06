@@ -126,7 +126,7 @@ $$
 Therefore:
 
 $$
-P^*=0,\qquad P^*=K
+P^*=0, P^*=K
 $$
 
 For positive growth rates:
