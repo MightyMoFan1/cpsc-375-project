@@ -1,41 +1,550 @@
 # Modeling and Forecasting COVID-19 Dynamics in the United States Using Logistic Growth Models
 
-The COVID-19 pandemic has had a profound impact on public health, healthcare infrastructure, and socioeconomic systems worldwide. Understanding the dynamics of infectious disease spread through mathematical and computational modeling is essential for analyzing epidemic trends, evaluating growth patterns, and developing data-driven forecasting approaches.
+## Project Overview
 
-This project focuses on developing a mathematical and data science framework to analyze and predict the progression of COVID-19 cases in the United States using the **logistic growth model**. The logistic growth model provides a mathematical representation of cumulative growth that initially increases exponentially before gradually slowing as it approaches an estimated upper asymptote, commonly referred to as the carrying capacity.
+This project investigates the mathematical modeling and forecasting of COVID-19 dynamics in the United States using two classical population growth formulations: the **discrete logistic growth map** and the **continuous logistic growth model**.
 
-The primary problem addressed in this project is determining how effectively a logistic growth model can characterize historical COVID-19 case trajectories and forecast cumulative confirmed cases over selected future time intervals. Using historical COVID-19 surveillance data, the project will investigate epidemic growth patterns, estimate model parameters, and evaluate the predictive performance of the mathematical model.
+The project explores the mathematical foundations of logistic growth, derives both model formulations, examines their equilibrium solutions and stability properties, and implements numerical simulations using Python and MATLAB.
 
-The analysis will incorporate data collection, preprocessing, exploratory data analysis, nonlinear parameter estimation, numerical simulation, and statistical model evaluation. Python and its scientific computing ecosystem will be used for data processing, visualization, and predictive modeling. MATLAB will provide an independent computational environment for implementing the logistic growth equations, performing numerical optimization, and validating model outputs. Jupyter Notebook will serve as the primary interactive research environment for documenting the analytical workflow and communicating results.
+The continuous logistic model is subsequently applied to historical U.S. COVID-19 cumulative reported case data to estimate model parameters and generate short-term forecasts.
 
-Model performance will be evaluated using statistical measures, including Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and the coefficient of determination (R²). Chronological training and testing datasets will be used to assess forecasting performance and minimize information leakage.
+The project emphasizes mathematical derivation, numerical implementation, parameter estimation, and model evaluation at an advanced undergraduate level.
 
-An additional objective is to investigate the limitations of the classical logistic growth model when applied to a complex, multi-wave epidemic. Changes in transmission dynamics, viral variants, vaccination patterns, public health interventions, testing availability, and reporting practices can influence observed case trajectories and reduce the accuracy of long-term predictions.
+---
 
-Ultimately, this project aims to demonstrate how mathematical modeling, statistical analysis, and computational data science can be integrated to study infectious disease dynamics. The findings will provide insight into the applicability, predictive capabilities, and limitations of logistic growth models in epidemiological forecasting.
+## Research Question
 
-## Primary Research Objective
+Can classical discrete and continuous logistic growth models describe the progression of cumulative reported COVID-19 cases in the United States, and how effectively can the continuous logistic model forecast short-term changes in reported cases?
 
-To develop, implement, and evaluate a logistic growth-based computational model for characterizing historical COVID-19 case trajectories and forecasting cumulative confirmed cases in the United States.
+## Research Objectives
 
-## Key Research Questions
+The primary objectives are:
 
-1. How effectively can the logistic growth model represent the cumulative progression of reported COVID-19 cases in the United States?
-2. What are the estimated growth rate and carrying capacity parameters for selected epidemic waves?
-3. How accurately can the model forecast cumulative confirmed cases over 7-day, 14-day, and 30-day prediction horizons?
-4. How does forecasting performance change across different epidemic waves?
-5. What are the limitations of applying a classical logistic growth model to a multi-wave infectious disease outbreak?
-6. How consistent are the estimated model parameters and predictions between Python and MATLAB implementations?
+1. Derive the discrete logistic growth recurrence relation.
+2. Derive the continuous logistic growth differential equation and its analytical solution.
+3. Analyze equilibrium points and stability conditions for both models.
+4. Investigate how model parameters influence population growth behavior.
+5. Implement numerical simulations using Python and MATLAB.
+6. Estimate logistic model parameters from historical U.S. COVID-19 data.
+7. Generate 7-day, 14-day, and 30-day forecasts.
+8. Evaluate forecasting performance using statistical error metrics.
+9. Compare the behavior and limitations of discrete and continuous logistic growth models.
 
-## Expected Outcomes
+---
 
-- A cleaned and structured historical COVID-19 dataset for the United States.
-- Exploratory data analysis and visualizations of epidemic growth patterns.
-- A mathematically formulated and computationally implemented logistic growth model.
-- Estimated logistic growth parameters using nonlinear optimization.
-- Short-term cumulative case forecasts.
-- Statistical evaluation of model performance.
-- Independent Python and MATLAB implementation comparisons.
-- A discussion of model assumptions, limitations, and potential improvements.
+# Mathematical Background
 
-**Scope:** This project is intended as a retrospective computational and statistical modeling study using reported COVID-19 case data. Predictions are model-based estimates rather than official public health forecasts or measurements of all actual infections.
+## 1. Discrete Logistic Growth Model
+
+The discrete logistic growth model describes population changes over successive time steps.
+
+The recurrence relation is:
+
+$$
+P_{n+1}=P_n+rP_n\left(1-\frac{P_n}{K}\right)
+$$
+
+Where:
+
+- $P_n$ represents the population at time step $n$.
+- $P_{n+1}$ represents the population at the next time step.
+- $r$ represents the discrete growth parameter.
+- $K$ represents the carrying capacity.
+
+### Mathematical Analysis
+
+The equilibrium points are obtained by setting:
+
+$$
+P_{n+1}=P_n=P^*
+$$
+
+This produces:
+
+$$
+P^*=0
+$$
+
+and
+
+$$
+P^*=K
+$$
+
+The stability of these equilibrium points will be examined using the derivative of the discrete mapping function.
+
+For positive $r$, the carrying-capacity equilibrium is locally asymptotically stable when:
+
+$$
+0<r<2
+$$
+
+The project will investigate how different parameter values influence the behavior of the discrete logistic map.
+
+## 2. Continuous Logistic Growth Model
+
+The continuous logistic growth model describes population changes over continuous time.
+
+Its governing differential equation is:
+
+$$
+\frac{dP}{dt}=rP\left(1-\frac{P}{K}\right)
+$$
+
+Where:
+
+- $P(t)$ represents the population at time $t$.
+- $r$ represents the continuous growth rate.
+- $K$ represents the carrying capacity.
+
+### Analytical Solution
+
+The differential equation can be solved using separation of variables and partial fraction decomposition.
+
+The resulting analytical solution is:
+
+$$
+P(t)=\frac{K}{1+Ae^{-rt}}
+$$
+
+Where:
+
+$$
+A=\frac{K-P_0}{P_0}
+$$
+
+and $P_0$ represents the initial population.
+
+### Equilibrium Analysis
+
+The equilibrium solutions satisfy:
+
+$$
+\frac{dP}{dt}=0
+$$
+
+Therefore:
+
+$$
+P^*=0 
+$$
+
+and 
+
+$$
+P^*=K
+$$
+
+For positive growth rates:
+
+- $P^*=0$ is unstable.
+- $P^*=K$ is asymptotically stable.
+
+### Inflection Point
+
+The logistic growth curve reaches its maximum growth rate at:
+
+$$
+P(t)=\frac{K}{2}
+$$
+
+The corresponding inflection time is:
+
+$$
+t_{\text{inflection}}=\frac{\ln(A)}{r}
+$$
+
+This represents the point at which the modeled population transitions from accelerating growth to decelerating growth.
+
+---
+
+# Discrete vs. Continuous Logistic Growth
+
+An important component of this project is comparing the mathematical behavior of the two logistic formulations.
+
+| Characteristic | Discrete Logistic Model | Continuous Logistic Model |
+|---|---|---|
+| Mathematical formulation | Difference equation | Differential equation |
+| Time representation | Discrete | Continuous |
+| Solution method | Iteration | Analytical or numerical |
+| Equilibrium analysis | Fixed points | Equilibrium solutions |
+| Stability analysis | Discrete dynamical systems | Continuous dynamical systems |
+| Numerical implementation | Recurrence iteration | Numerical integration |
+| Main application | Mathematical comparison | COVID-19 forecasting |
+
+The discrete recurrence relation can also be interpreted as an explicit Euler discretization of the continuous logistic differential equation with a time step of one.
+
+The two formulations are related but are not generally equivalent for finite time steps.
+
+---
+
+# COVID-19 Data and Forecasting
+
+## Dataset
+
+The project will use historical COVID-19 data for the United States.
+
+The primary proposed data source is:
+
+**Our World in Data: COVID-19 Dataset**
+
+https://ourworldindata.org/coronavirus
+
+The dataset contains reported epidemiological observations, including:
+
+- Date
+- Location
+- Total confirmed cases
+- New confirmed cases
+- Smoothed daily cases
+- Total deaths
+- Vaccination statistics
+
+The primary response variable for this project is:
+
+$$
+N(t)=\text{Cumulative reported COVID-19 cases}
+$$
+
+The analysis will focus on cumulative reported cases rather than active infections or the total number of actual infections.
+
+## Forecasting Methodology
+
+The continuous logistic model will be fitted to selected historical epidemic-wave data.
+
+The model parameters are:
+
+$$
+N(t)=\frac{K}{1+Ae^{-rt}}
+$$
+
+The parameters will be estimated using nonlinear least squares.
+
+The estimated parameters are:
+
+- $K$: Fitted upper asymptote of the selected epidemic wave.
+- $r$: Estimated continuous growth rate.
+- $A$: Logistic integration parameter.
+
+The fitted model will be used to generate forecasts over three time horizons:
+
+| Forecast Horizon | Objective |
+|---|---|
+| 7 days | Short-term forecasting |
+| 14 days | Intermediate short-term forecasting |
+| 30 days | Longer short-term forecasting |
+
+The forecasts will be compared against subsequently observed cumulative reported cases.
+
+**Important:** The fitted carrying capacity is an upper asymptote for the selected model and epidemic-wave interval. It should not be interpreted as the maximum number of people who can contract COVID-19.
+
+## Parameter Estimation
+
+The project will investigate nonlinear least-squares estimation using Python's `scipy.optimize.curve_fit`.
+
+The objective is to minimize:
+
+$$
+SSE=\sum_{i=1}^{n}\left[N_i-\hat{N}(t_i)\right]^2
+$$
+
+Where:
+
+- $N_i$ represents the observed cumulative case count.
+- $\hat{N}(t_i)$ represents the model-predicted case count.
+- $n$ represents the number of observations.
+
+The estimated parameters will be used to evaluate the model's ability to represent historical epidemic-wave behavior.
+
+---
+
+# Model Evaluation
+
+Forecasting performance will be assessed using the following statistical metrics.
+
+### Mean Absolute Error (MAE)
+
+$$
+MAE=\frac{1}{n}\sum_{i=1}^{n}|y_i-\hat{y}_i|
+$$
+
+### Root Mean Squared Error (RMSE)
+
+$$
+RMSE=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2}
+$$
+
+### Coefficient of Determination ($R^2$)
+
+$$
+R^2=1-\frac{\sum_{i=1}^{n}(y_i-\hat{y}_i)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}
+$$
+
+These metrics will be used to evaluate how closely the model predictions agree with observed cumulative reported cases.
+
+Forecast evaluation will use chronological training and testing periods to avoid data leakage.
+
+---
+
+# Technology Stack
+
+### Programming Languages
+
+- Python
+- MATLAB
+
+### Python Libraries
+
+| Library | Purpose |
+|---|---|
+| NumPy | Numerical calculations and array operations |
+| SciPy | Numerical integration and parameter estimation |
+| Matplotlib | Data visualization |
+| Pandas | Data manipulation and preprocessing |
+| Scikit-learn | Model evaluation metrics |
+| Jupyter Notebook | Exploratory analysis and experimentation |
+
+### MATLAB
+
+MATLAB will be used for independent numerical implementation, simulation, and comparison of model results.
+
+---
+
+# Repository Structure
+
+```text
+COVID19-Logistic-Growth-Project/
+│
+├── README.md
+├── LICENSE
+├── .gitignore
+├── requirements.txt
+│
+├── data/
+│   ├── raw/
+│   │   └── covid_us_raw.csv
+│   │
+│   └── processed/
+│       └── covid_us_clean.csv
+│
+├── python/
+│   ├── discrete_logistic.py
+│   ├── continuous_logistic.py
+│   ├── data_collection.py
+│   ├── data_cleaning.py
+│   ├── parameter_estimation.py
+│   ├── forecasting.py
+│   └── model_evaluation.py
+│
+├── matlab/
+│   ├── discrete_logistic.m
+│   ├── continuous_logistic.m
+│   ├── parameter_estimation.m
+│   ├── forecasting.m
+│   └── model_visualization.m
+│
+├── notebooks/
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_discrete_logistic_model.ipynb
+│   ├── 03_continuous_logistic_model.ipynb
+│   ├── 04_parameter_estimation.ipynb
+│   └── 05_covid19_forecasting.ipynb
+│
+├── figures/
+│   ├── cumulative_cases.png
+│   ├── discrete_logistic_growth.png
+│   ├── continuous_logistic_growth.png
+│   ├── logistic_model_comparison.png
+│   └── forecasting_results.png
+│
+├── results/
+│   ├── estimated_parameters.csv
+│   ├── forecast_predictions.csv
+│   └── model_metrics.csv
+│
+└── reports/
+    └── final_research_report.pdf
+```
+
+---
+
+# Methodology
+
+The project will follow these stages:
+
+### Stage 1: Mathematical Derivation
+
+- Derive the discrete logistic recurrence relation.
+- Derive the continuous logistic differential equation.
+- Obtain the analytical solution of the continuous model.
+- Determine equilibrium points and stability conditions.
+- Derive the inflection point and maximum growth rate.
+
+### Stage 2: Numerical Simulation
+
+- Implement the discrete logistic map in Python and MATLAB.
+- Implement the continuous logistic differential equation.
+- Compare numerical and analytical solutions.
+- Investigate the effects of varying growth rates and carrying capacities.
+
+### Stage 3: Data Collection and Preprocessing
+
+- Obtain historical U.S. COVID-19 data.
+- Extract cumulative reported case observations.
+- Handle missing values and reporting anomalies.
+- Select appropriate epidemic-wave intervals.
+- Visualize cumulative and daily reported cases.
+
+### Stage 4: Parameter Estimation
+
+- Fit the continuous logistic model to historical observations.
+- Estimate $K$, $r$, and $A$.
+- Examine the fitted curve and residuals.
+- Investigate the sensitivity of parameter estimates to the selected training interval.
+
+### Stage 5: Forecasting
+
+Generate 7-day, 14-day, and 30-day forecasts using the fitted model.
+
+### Stage 6: Model Evaluation
+
+- Compare predictions with actual observations.
+- Calculate MAE, RMSE, and $R^2$.
+- Evaluate different forecasting horizons.
+- Compare Python and MATLAB implementations.
+
+### Stage 7: Research Discussion
+
+Discuss the mathematical behavior, forecasting performance, assumptions, and limitations of the logistic growth models.
+
+---
+
+# Limitations
+
+The classical logistic growth model has several limitations when applied to real-world epidemic data.
+
+1. **Multiple epidemic waves:** COVID-19 experienced multiple waves of transmission, which cannot generally be represented accurately by a single logistic curve.
+
+2. **Changing transmission conditions:** Variants, vaccination, public-health interventions, and behavioral changes influence epidemic progression.
+
+3. **Reporting limitations:** Confirmed case counts depend on testing availability, reporting practices, and surveillance systems.
+
+4. **Parameter sensitivity:** Estimated parameters can vary depending on the selected observation period and initial parameter estimates.
+
+5. **Forecasting uncertainty:** A strong historical fit does not guarantee accurate future predictions.
+
+6. **Carrying capacity interpretation:** The estimated carrying capacity is a fitted mathematical asymptote, not a biological limit on the total number of infections.
+
+These limitations will be considered when interpreting the forecasting results.
+
+---
+
+# Installation and Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/USERNAME/COVID19-Logistic-Growth-Project.git
+```
+
+Navigate into the project directory:
+
+```bash
+cd COVID19-Logistic-Growth-Project
+```
+
+Install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+Launch Jupyter Notebook:
+
+```bash
+jupyter notebook
+```
+
+MATLAB scripts can be executed independently using MATLAB.
+
+## Requirements
+
+The `requirements.txt` file will include:
+
+```text
+numpy
+scipy
+matplotlib
+pandas
+scikit-learn
+jupyter
+```
+
+---
+
+# Expected Outcomes
+
+The expected outcomes of this project include:
+
+- Mathematical derivations of discrete and continuous logistic growth models.
+- Equilibrium and stability analysis.
+- Numerical simulations in Python and MATLAB.
+- Comparison of discrete and continuous model behavior.
+- Estimated logistic parameters from historical U.S. COVID-19 data.
+- Short-term forecasts over 7-, 14-, and 30-day horizons.
+- Quantitative evaluation of forecasting performance.
+- Discussion of the strengths and limitations of classical logistic growth models.
+
+The project aims to demonstrate how classical mathematical models can be implemented and evaluated using real-world epidemiological observations.
+
+---
+
+# References and Data Sources
+
+1. Verhulst, P. F., "Notice sur la loi que la population suit dans son accroissement," *Correspondance Mathématique et Physique*, vol. 10, pp. 113–121, 1838.
+
+2. Our World in Data, "Coronavirus Pandemic (COVID-19)," https://ourworldindata.org/coronavirus.
+
+3. SciPy Documentation, "scipy.integrate.solve_ivp," https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html.
+
+4. SciPy Documentation, "scipy.optimize.curve_fit," https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html.
+
+5. MathWorks Documentation, "Ordinary Differential Equations," https://www.mathworks.com/help/matlab/ordinary-differential-equations.html.
+
+Additional peer-reviewed research papers and relevant preprints will be incorporated as the literature review develops.
+
+---
+
+# Project Status
+
+**Status:** In Development
+
+The project is currently focused on mathematical derivations, numerical simulations, and implementation of the discrete and continuous logistic growth models.
+
+The COVID-19 data analysis, parameter estimation, and forecasting components will follow.
+
+---
+
+# Future Improvements
+
+Potential extensions include:
+
+- Comparing different epidemic-wave intervals.
+- Investigating the effects of different training-window lengths.
+- Examining forecasting performance across different time horizons.
+- Comparing numerical implementations between Python and MATLAB.
+- Investigating alternative epidemic growth models as future research.
+
+---
+
+## Author
+
+**Author:** Troy Chin
+
+**Project:** Modeling and Forecasting COVID-19 Dynamics in the United States Using Logistic Growth Models
+
+**Academic Level:** Advanced Undergraduate Research
+
+**Primary Tools:** Python, MATLAB, Jupyter Notebook
+
+**Research Focus:** Applied Mathematics, Mathematical Modeling, Numerical Analysis, and Time-Series Forecasting.
