@@ -330,18 +330,16 @@ COVID19-Logistic-Growth-Project/
 ├── python/
 │   ├── discrete_logistic.py
 │   ├── continuous_logistic.py
-│   ├── data_collection.py
-│   ├── data_cleaning.py
-│   ├── parameter_estimation.py
 │   ├── forecasting.py
+│   ├── parameter_estimation.py
 │   └── model_evaluation.py
 │
 ├── matlab/
 │   ├── discrete_logistic.m
 │   ├── continuous_logistic.m
 │   ├── parameter_estimation.m
-│   ├── forecasting.m
-│   └── model_visualization.m
+│   ├── forecasting.py
+│   └── model_evaluation.py
 │
 ├── notebooks/
 │   ├── 01_data_exploration.ipynb
