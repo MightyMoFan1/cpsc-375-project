@@ -342,11 +342,7 @@ COVID19-Logistic-Growth-Project/
 │   └── model_evaluation.py
 │
 ├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_discrete_logistic_model.ipynb
-│   ├── 03_continuous_logistic_model.ipynb
-│   ├── 04_parameter_estimation.ipynb
-│   └── 05_covid19_forecasting.ipynb
+│   ├── exploratory_data_analysis.ipynb
 │
 ├── figures/
 │   ├── cumulative_cases.png
