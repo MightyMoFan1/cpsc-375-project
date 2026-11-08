@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def discrete_logistic_growth(p0, r, K, t_max):
     population = np.zeros(t_max + 1)
     population[0] = p0
