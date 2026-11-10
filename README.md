@@ -343,6 +343,7 @@ COVID19-Logistic-Growth-Project/
 │
 ├── notebooks/
 │   ├── exploratory_data_analysis.ipynb
+│   └── tidy_data_display.ipynb
 │
 ├── figures/
 │   ├── cumulative_cases.png
