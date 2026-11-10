@@ -10,13 +10,18 @@ th:nth-child(1), th:nth-child(2) { width: 9%; }
 
 During the COVID pandemic, health officials, hospitals and governments had to make decisions with incomplete information, like how many hospital beds and staff to prepare or when to tighten or relax restrictions. Using mathematical models, we can measure how case counts grow so we can predict the trajectory of an outbreak in the short-term. Logistic growth models are one such prediction model. If this model fits well with existing COVID-19 data, it could help forecast how an ongoing wave will play out and make those important regulatory decisions be much more substantive and accurate. 
 
-Our World in Data (OWID) is an non-profit online research publication that compiles high-quality global datasets on more than 120 topics such as "poverty, CO2 emissions and climate change, migration, democracy, global health...and more". [1] During the pandemic it maintained one of the most widely used COVID-19 datasets, which collects case, death, testing and vaccination figures for every country in a consistent format. [2]
+Our World in Data (OWID) is a nonprofit online research publication that compiles high-quality global datasets on more than 120 topics such as "poverty, CO2 emissions and climate change, migration, democracy, global health...and more". [1] During the pandemic it maintained one of the most widely used COVID-19 datasets, which collects case, death, testing and vaccination figures for every country in a consistent format. [2]
 
 We use two files from OWID's COVID-19 dataset: `total_cases.csv` (cumulative confirmed COVID-19 cases) and `total_deaths.csv` (cumulative confirmed COVID-19 deaths). Each file has a `date` column plus one column for each of 246 locations: 234 countries and territories, and 12 aggregate regions. The rows cover January 5, 2020 to August 4, 2024 and are measured in weekly counts. After cleaning, the U.S. data has 237 weekly observations.
 
 OWID uses the World Health Organization's COVID-19 data, adds regional and income-group totals, and republishes them. [3]
 
 There are some reporting limitations such as confirmed case counts depending on testing availability, reporting practices, and surveillance systems. Testing was very limited in early 2020, and from 2022 onward, many people used at-home rapid tests not reporting their results. US reporting also ended in 2023 while deaths were reported through August 2024, and a few countries have small downward corrections to their totals for various reasons.
+
+### Progress Made So Far
+
+Our team has collected the COVID-19 cases and deaths datasets, cleaned the data, and organized our GitHub repository. We have also created a Python notebook that imports and processes the data, along with preliminary graphs showing how COVID-19 cases and deaths changed over time in the United States. Our next steps are to analyze individual COVID-19 waves, calculate deaths per reported case, and evaluate how accurately logistic growth models can predict future cases.
+
 ### Goal and EDA Questions
 **Goal:** Can classical continuous logistic growth models describe the progression of cumulative reported COVID-19 cases in the United States, and how effectively can the continuous logistic model forecast short-term changes in reported cases?
 
@@ -33,9 +38,9 @@ There are some reporting limitations such as confirmed case counts depending on 
 5. How did the number of deaths per reported case differ between waves?
     - Using the `wave` column from question 3, we will compute a weekly deaths-per-case ratio with `.assign()`, dividing weekly new deaths by weekly new cases, using only weeks before May 2023, when both series were reported. We will compare waves with side-by-side box plots. We will also use `groupby("wave")` to make a table of each wave's total deaths divided by total cases.
 ### Model Plan
-We will fit the continuous logistic growth model, N(t) = K / (1 + A*e^(-rt)), to each wave identified by Question 3 using nonlinear least squares with `scipy.optimize.curve_fit`. Here t is weeks since the wave's start and K is the wave's fitted upper limit; initial guesses for K and r come from Question 4. To avoid training on future data, each wave is split chronologically: the model is trained up to a cutoff week and forecasts cumulative cases 1, 2 and 4 weeks ahead. Forecasts will be evaluated with MAE, RMSE and R^2, and compared against a naive baseline to test whether the logistic model adds forecasting value. Results appear in Figures 5-6 and Table 4. Implementing a discrete logicstic model is an extra goal if we have time.
+We will fit the continuous logistic growth model, N(t) = K / (1 + A*e^(-rt)), to each wave identified by Question 3 using nonlinear least squares with `scipy.optimize.curve_fit`. Here t is weeks since the wave's start and K is the wave's fitted upper limit; initial guesses for K and r come from Question 4. To avoid training on future data, each wave is split chronologically: the model is trained up to a cutoff week and forecasts cumulative cases 1, 2 and 4 weeks ahead. Forecasts will be evaluated with MAE, RMSE and R^2, and compared against a naive baseline to test whether the logistic model adds forecasting value. Results appear in Figures 5-6 and Table 4. Implementing a discrete logistic model is an extra goal if we have time.
 ### Figures and Tables
-Each figure will have a descriptive title, labeled axes with unites, and a legend where color or facets encode a variable.
+Each figure will have a descriptive title, labeled axes with units, and a legend where color or facets encode a variable.
 #### EDA Questions
 - **Table 1: Data Quality summary** (Question 1, completed)
 - **Figure 1: U.S. cumulative cases, weekly new cases, and weekly new deaths** (Question 2, completed).
@@ -46,8 +51,8 @@ Each figure will have a descriptive title, labeled axes with unites, and a legen
 - **Figure 4: Weekly deaths per case, by wave** (Question 5)
 #### Model
 - **Figure 5: Logistic fits vs. observed cumulative cases, by wave**
-- **Figure 6: Forecases vs. actual cumulative cases**
-- **Table 4: Forecaset error metrics**
+- **Figure 6: Forecasts vs. actual cumulative cases**
+- **Table 4: Forecast error metrics**
 ### Timeline and Team Split
 | Week | Dates | Troy | Mohammed | Daniel |
 |---|-----|-----|-----|-----|
