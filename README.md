@@ -313,52 +313,57 @@ MATLAB will be used for independent numerical implementation, simulation, and co
 # Repository Structure
 
 ```text
-COVID19-Logistic-Growth-Project/
+cpsc-375-project/
 │
 ├── README.md
 ├── LICENSE
 ├── .gitignore
-├── requirements.txt
+├── requirements.txt                   # Python packages for the venv / Colab
 │
 ├── data/
-│   ├── raw/
-│   │   └── covid_us_raw.csv
-│   │
+│   ├── total_cases.csv                # Raw OWID cumulative cases (wide format)
+│   ├── total_deaths.csv               # Raw OWID cumulative deaths (wide format)
 │   └── processed/
-│       └── covid_us_clean.csv
-│
-├── python/
-│   ├── discrete_logistic.py
-│   ├── continuous_logistic.py
-│   ├── forecasting.py
-│   ├── parameter_estimation.py
-│   └── model_evaluation.py
-│
-├── matlab/
-│   ├── discrete_logistic.m
-│   ├── continuous_logistic.m
-│   ├── parameter_estimation.m
-│   ├── forecasting.py
-│   └── model_evaluation.py
+│       ├── tidy_covid_all_locations.csv   # Tidy weekly data, all locations
+│       ├── us_covid_clean.csv             # Cleaned weekly U.S. table
+│       └── us_covid_waves.csv             # U.S. table with wave labels (planned, Wk 2)
 │
 ├── notebooks/
-│   ├── exploratory_data_analysis.ipynb
-│   └── tidy_data_display.ipynb
+│   ├── data_cleaning.ipynb            # Data import, cleaning, tidying (Q1–Q2)
+│   ├── exploratory_data_analysis.ipynb    # Initial exploration and single logistic fit
+│   ├── wave_analysis.ipynb            # Q3: wave definitions (planned, Wk 2)
+│   ├── deaths_per_case.ipynb          # Q5: deaths per case by wave (planned, Wk 2)
+│   ├── growth_rate_analysis.ipynb     # Q4: growth-rate regressions (planned, Wk 3)
+│   └── logistic_model_fitting.ipynb   # Logistic fits by wave (planned, Wk 2–3)
 │
-├── figures/
-│   ├── cumulative_cases.png
-│   ├── discrete_logistic_growth.png
-│   ├── continuous_logistic_growth.png
-│   ├── logistic_model_comparison.png
-│   └── forecasting_results.png
+├── Python/
+│   ├── continuous_logistic_model.py   # Continuous logistic model
+│   ├── discrete_logistic_model.py     # Discrete logistic map and cobweb plots
+│   ├── parameter_estimation.py        # Parameter estimation test on synthetic data
+│   ├── model_evaluation.py            # Naive baseline and MAE/RMSE/R² (planned, Wk 3)
+│   └── forecasting.py                 # 1/2/4-week forecasts (planned, Wk 4)
+│
+├── figures/                           # (planned, Wk 1–4)
+│   ├── fig1_us_cases_deaths.png
+│   ├── fig2_wave_cumulative.png
+│   ├── fig3_growth_rate.png
+│   ├── fig4_deaths_per_case.png
+│   ├── fig5_logistic_fits.png
+│   └── fig6_forecasts.png
 │
 ├── results/
-│   ├── estimated_parameters.csv
-│   ├── forecast_predictions.csv
-│   └── model_metrics.csv
+│   ├── logistic_mle_estimates.csv     # Synthetic-data parameter estimates
+│   ├── table2_wave_summary.csv        # (planned, Wk 2)
+│   ├── table3_growth_regression.csv   # (planned, Wk 3)
+│   ├── estimated_parameters.csv       # (planned, Wk 3)
+│   ├── forecast_predictions.csv       # (planned, Wk 4)
+│   └── model_metrics.csv              # Table 4 (planned, Wk 4)
 │
 └── reports/
-    └── final_research_report.pdf
+    ├── checkin_report.md
+    ├── checkin_report.pdf
+    ├── final_report.pdf               # (planned, Wk 4–5)
+    └── final_presentation.pdf         # (planned, Wk 5)
 ```
 
 ---
