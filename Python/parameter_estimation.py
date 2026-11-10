@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.optimize import minimize
+from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error, r2_score
 
 # 1. Define the deterministic logistic growth model in terms of P(t) and P0
 def logistic_model(t, r, K, P0):
@@ -44,19 +45,12 @@ result = minimize(
     neg_log_likelihood, 
     initial_guess, 
     args=(t_data, y_data), 
-    method='L-BFGS-B', 
+    method='L-BFGS-B',
     bounds=[(1e-5, 2.0), (1e-5, 2000.0), (1e-5, 500.0), (1e-5, 100.0)]
 )
 
 # Extract estimates
 est_r, est_K, est_P0, est_sigma = result.x
-
-print("--- MAXIMUM LIKELIHOOD ESTIMATES ---")
-print(f"Parameter | True Value | MLE Estimate")
-print(f"r         | {true_r:<10.3f} | {est_r:.3f}")
-print(f"K         | {true_K:<10.1f} | {est_K:.1f}")
-print(f"P0        | {true_P0:<10.1f} | {est_P0:.1f}")
-print(f"sigma     | {true_sigma:<10.1f} | {est_sigma:.1f}")
 
 # Save estimated parameters as a CSV file using pandas
 df_estimates = pd.DataFrame({
@@ -84,3 +78,18 @@ plt.title('Maximum Likelihood Estimation of Logistic Growth')
 plt.legend()
 plt.grid(True, linestyle=':', alpha=0.6)
 plt.show()
+
+# Generate predictions for the actual observed data time points to compute performance metrics
+y_pred_data = logistic_model(t_data, est_r, est_K, est_P0)
+
+mse = mean_squared_error(y_data, y_pred_data)
+rmse = np.sqrt(mse)
+mape = mean_absolute_percentage_error(y_data, y_pred_data)
+r2 = r2_score(y_data, y_pred_data)
+
+# Print the final performance report
+print("\n=== Model Performance Evaluation ===")
+print(f"Mean Squared Error (MSE):           {mse:.4f}")
+print(f"Root Mean Squared Error (RMSE):     {rmse:.4f}")
+print(f"Mean Absolute Percentage Error (MAPE): {mape*100:.2f}%")
+print(f"R² Coefficient of Determination:     {r2:.4f}")
