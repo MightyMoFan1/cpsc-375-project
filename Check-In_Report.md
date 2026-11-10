@@ -43,7 +43,7 @@ ______
 | Wk 4 | - | - | - |
 ### Citations
 **Data source:** Mathieu, E., Ritchie, H., Rodés-Guirao, L., Appel, C., Gavrilov, D., Giattino, C., Hasell, J., Macdonald, B., Dattani, S., Beltekian, D., Ortiz-Ospina, E., & Roser, M. (2020). *Coronavirus Pandemic (COVID-19)*. Our World in Data. https://ourworldindata.org/coronavirus
-______
+
 **Application Domain:**
 1. Verhulst, P. F., "Notice sur la loi que la population suit dans son accroissement," *Correspondance Mathématique et Physique*, vol. 10, pp. 113–121, 1838.
 
@@ -54,5 +54,5 @@ ______
 4. SciPy Documentation, "scipy.optimize.curve_fit," https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html.
 
 5. MathWorks Documentation, "Ordinary Differential Equations," https://www.mathworks.com/help/matlab/ordinary-differential-equations.html.
-______
-**Software:**Python, MATLAB, Jupyter Notebook
+
+**Software:** Python, MATLAB, Jupyter Notebook
